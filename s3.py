@@ -2,7 +2,9 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 import os
+import json
 
+# function for uploading staging files to aws 
 
 def upload_file(file_name, bucket, object_name=None):
     """Upload a file to an S3 bucket
@@ -20,10 +22,11 @@ def upload_file(file_name, bucket, object_name=None):
     # Upload the file
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
+        # takes json file and turns into a __str__
+        json_data = json.dumps(file_name)
+        # put_object function can take STR json object and put into relative bucket, and name it based on Key
+        s3_client.put_object(Body=json_data, Bucket=bucket, Key=object_name)
     except ClientError as e:
         logging.error(e)
         return False
     return True
-
-upload_file('test.json', 'worldcup-project-2022-bucket', 'test_json.json')

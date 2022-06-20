@@ -1,5 +1,9 @@
-# pw files
-aws.py
+config.py
+
+# aws 
+
+~/.aws/credentials
+~/.aws/config
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
